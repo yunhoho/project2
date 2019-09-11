@@ -4,7 +4,7 @@ package kr.co.sist.server.view;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
-
+//
 @SuppressWarnings("serial")
 public class AdminMainView extends JFrame{
 
