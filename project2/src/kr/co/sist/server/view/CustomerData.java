@@ -70,7 +70,7 @@ public class CustomerData extends JPanel implements ActionListener{
 		add(jspClientList);
 //		jpClientData.add("North",jpClientDataNorth);
 //		jpClientData.add("Center",jspClientList);
-		
+//		
 //		jtp=new JTabbedPane();
 //		jtp.addTab("°í°´Data",jpClientData );
 //		add("Center",);

@@ -56,7 +56,7 @@ public class AdminPassword extends JPanel implements ActionListener {
 //		setVisible(true);
 //		setResizable(false);
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+//		
 	}//AdminPassword
 	
 	@Override

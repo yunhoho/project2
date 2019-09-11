@@ -7,7 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
 public class Tab extends JFrame {
-	
+//	
 	private CustomerData cd;
 	private AdminPassword ap;
 	
