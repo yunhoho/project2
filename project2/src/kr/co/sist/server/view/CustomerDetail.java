@@ -37,7 +37,7 @@ public class CustomerDetail extends JFrame implements ActionListener{
 	private JTextArea jtaNote;
 	private JButton jbtImg,jbtChange, jbtClose;
 	private JScrollPane jspNote ;
-//	
+	
 	public CustomerDetail() {
 		//JtextField
 		jtfName =new JTextField();
@@ -184,9 +184,9 @@ public class CustomerDetail extends JFrame implements ActionListener{
 		
 	}//actionPerformed
 
-//	public static void main(String[] args) {
-//		new CustomerDetail();
-//	}//m
+	public static void main(String[] args) {
+		new CustomerDetail();
+	}//m
 	
 
 }//c

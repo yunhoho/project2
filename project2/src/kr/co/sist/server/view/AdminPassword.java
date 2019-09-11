@@ -26,7 +26,7 @@ public class AdminPassword extends JPanel implements ActionListener {
 		jlbPassConfirm=new JLabel("새 비밀번호 확인");
 		jpfPassConfirm=new JPasswordField(20);
 		//jbutton
-		jbtConfirm=new JButton("확인");
+		jbtConfirm=new JButton("변경");
 		
 		//Font
 		Font font=new Font("맑은 고딕", Font.BOLD, 18);
@@ -36,12 +36,13 @@ public class AdminPassword extends JPanel implements ActionListener {
 		
 		
 		//Bounds
-		jlbOld.setBounds(220, 150, 150, 30);
-		jlbPass.setBounds(220, 195, 150, 30);
-		jlbPassConfirm.setBounds(220, 240, 150, 30);
-		jpfOld.setBounds(400, 150, 200, 30);
-		jpfPass.setBounds(400, 195, 200, 30);
-		jpfPassConfirm.setBounds(400, 240, 200, 30);
+		jlbOld.setBounds(210, 120, 150, 30);
+		jlbPass.setBounds(210, 165, 150, 30);
+		jlbPassConfirm.setBounds(210, 210, 150, 30);
+		jpfOld.setBounds(390, 120, 200, 30);
+		jpfPass.setBounds(390, 165, 200, 30);
+		jpfPassConfirm.setBounds(390, 210, 200, 30);
+		jbtConfirm.setBounds(350, 270, 120, 30);
 		
 		//add
 		add(jlbOld);
@@ -50,13 +51,11 @@ public class AdminPassword extends JPanel implements ActionListener {
 		add(jpfOld);
 		add(jpfPass);
 		add(jpfPassConfirm);
-		
+		add(jbtConfirm);
 		setLayout(null);
 		setBounds(100,100,800,500);
-//		setVisible(true);
-//		setResizable(false);
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		
+
+		
 	}//AdminPassword
 	
 	@Override

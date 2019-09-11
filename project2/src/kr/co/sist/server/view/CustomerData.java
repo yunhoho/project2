@@ -62,24 +62,16 @@ public class CustomerData extends JPanel implements ActionListener{
 		jpClientData.add(jlbClient);
 		jpClientData.add(jtfClientName);
 		jpClientData.add(jbtSearch);
-//		JPanel jpClientData=new JPanel();
+
 		
 		jpClientData.setBounds(0, 10, 800, 35);
 		jspClientList.setBounds(0,50, 790, 385);
 		add(jpClientData);
 		add(jspClientList);
-//		jpClientData.add("North",jpClientDataNorth);
-//		jpClientData.add("Center",jspClientList);
-//		
-//		jtp=new JTabbedPane();
-//		jtp.addTab("°í°´Data",jpClientData );
-//		add("Center",);
-//		add(jpClientData);
-		
+
 		setLayout(null);
 		setBounds(100,100,800,500);
-//		setVisible(true);
-//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
 		
 	}//ClientData
 	
@@ -87,9 +79,7 @@ public class CustomerData extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 	}//actionPerformed
-//	public static void main(String[] args) {
-//		new CustomerData();
-//	}//m
+
 
 
 }//c
