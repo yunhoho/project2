@@ -1,4 +1,4 @@
-package kr.co.sist.server;
+package kr.co.sist.server.view;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -7,11 +7,12 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
-public class AdminPassword extends JFrame implements ActionListener {
+public class AdminPassword extends JPanel implements ActionListener {
 	private JPasswordField jpfPass,jpfPassConfirm,jpfOld;
 	private JButton jbtConfirm;
 	private JLabel jlbOld, jlbPass,jlbPassConfirm;
@@ -33,7 +34,6 @@ public class AdminPassword extends JFrame implements ActionListener {
 		jlbPass.setFont(font);
 		jlbPassConfirm.setFont(font);
 		
-		setLayout(null);
 		
 		//Bounds
 		jlbOld.setBounds(220, 150, 150, 30);
@@ -51,10 +51,11 @@ public class AdminPassword extends JFrame implements ActionListener {
 		add(jpfPass);
 		add(jpfPassConfirm);
 		
+		setLayout(null);
 		setBounds(100,100,800,500);
-		setVisible(true);
-		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setVisible(true);
+//		setResizable(false);
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}//AdminPassword
 	
