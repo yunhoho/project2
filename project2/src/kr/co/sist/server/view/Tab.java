@@ -27,9 +27,7 @@ public class Tab extends JFrame {
 		add("Center",jtp);
 
 		
-//		JScrollPane jscp=new JScrollPane
-//				(jtp,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//		setContentPane(jscp);
+
 		
 		setBounds(10, 10, 800, 500);
 		setResizable(false);

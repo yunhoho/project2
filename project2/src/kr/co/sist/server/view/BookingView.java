@@ -112,7 +112,7 @@ public class BookingView extends JPanel{
 		
 		jpBookingNorth.setBounds(0, 10, 800, 35);
 		jpBookingDate.setBounds(0, 45, 800, 35);
-		jspbookingList.setBounds(0,80, 790, 385);
+		jspbookingList.setBounds(0,85, 790, 350);
 		
 		add(jpBookingNorth);
 		add(jpBookingDate);

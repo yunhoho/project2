@@ -23,7 +23,7 @@ public class CustomerData extends JPanel implements ActionListener{
 	private JTextField jtfClientName;
 	private JLabel jlbClient;
 	private JButton jbtSearch;
-	private JTabbedPane jtp;
+
 
 	public CustomerData() {
 		String[] clientColumnNames= {"고객명","전화번호","성별","마지막 시술일자"};

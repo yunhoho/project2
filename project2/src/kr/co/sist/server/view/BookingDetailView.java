@@ -54,7 +54,7 @@ public class BookingDetailView extends JFrame {
 		
 		jlOrderList.setBounds(25, 50, 80,20);
 		jsp.setBounds(25, 70, 350,150);
-		jbtAddStyle.setBounds(290, 230, 80,30);
+		jbtAddStyle.setBounds(295, 230, 80,30);
 		jlExtraMsg.setBounds(25, 260, 80,20);
 		jtaExtraMsg.setBounds(25, 280, 350,150);
 		jlTotalPrice.setBounds(50, 450, 80,20);
