@@ -1,4 +1,4 @@
-package kr.co.sist.user;
+package kr.co.sist.user.view;
 
 import java.awt.Color;
 import java.awt.Font;
