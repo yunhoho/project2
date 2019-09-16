@@ -11,21 +11,23 @@ import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
+import kr.co.sist.user.controller.UsePriceEvt;
+
 @SuppressWarnings("serial")
 public class UserPrice extends JFrame{
 	private JLabel jlCut, jlPerm, jlDyeing, jlClinic;
 	private DefaultTableModel dtmCutInfo, dtmPermInfo, dtmPermSpecialInfo, dtmDyeInfo, dtmBleachingInfo, dtmClinicInfo;
 	private JTable jtCutList, jtPermList, jtSpecialPermList, jtDyeingList, jtBleachingList, jtClinicList;
 	    
-	public UserPrice() {
+	public UserPrice() {		
 		//1. Model »ý¼º
 		// - °¡µ¥ÀÌÅÍ ³Ö¾îº¸±â
-		String[][] rowCut = { { "±âº»ÄÆ", "15,000"}, {"µðÀÚÀÌ³Ê","33,000"}};
-		String[][] rowPerm = {{"¼ôÆß","150,000"}, {"´Ü¹ßÆß","220,000"}, {"¹Ìµð¿òÆß","250,000"}, {"·ÕÆß","280,000"}};
-		String[][] rowSpecialPerm = {{"¼ôÆß","200,000"}, {"´Ü¹ßÆß","270,000"}, {"¹Ìµð¿òÆß","320,000"}, {"·ÕÆß","330,000"}};
-		String[][] rowDyeing = {{"¼ô","110,000"}, {"´Ü¹ß","150,000"}, {"¹Ìµð¿ò","190,000"}, {"·Õ","240,000"}};
-		String[][] rowBleching = {{"¼ô","160,000"}, {"´Ü¹ß","210,000"}, {"¹Ìµð¿ò","240,000"}, {"·Õ","290,000"}};
-		String[][] rowClinic = {{"¼ô","150,000"}, {"´Ü¹ß","190,000"}, {"¹Ìµð¿ò","230,000"}, {"·Õ","270,000"}};
+//		String[][] rowCut = { { "±âº»ÄÆ", "15,000"}, {"µðÀÚÀÌ³Ê","33,000"}};
+//		String[][] rowPerm = {{"¼ôÆß","150,000"}, {"´Ü¹ßÆß","220,000"}, {"¹Ìµð¿òÆß","250,000"}, {"·ÕÆß","280,000"}};
+//		String[][] rowSpecialPerm = {{"¼ôÆß","200,000"}, {"´Ü¹ßÆß","270,000"}, {"¹Ìµð¿òÆß","320,000"}, {"·ÕÆß","330,000"}};
+//		String[][] rowDyeing = {{"¼ô","110,000"}, {"´Ü¹ß","150,000"}, {"¹Ìµð¿ò","190,000"}, {"·Õ","240,000"}};
+//		String[][] rowBleching = {{"¼ô","160,000"}, {"´Ü¹ß","210,000"}, {"¹Ìµð¿ò","240,000"}, {"·Õ","290,000"}};
+//		String[][] rowClinic = {{"¼ô","150,000"}, {"´Ü¹ß","190,000"}, {"¹Ìµð¿ò","230,000"}, {"·Õ","270,000"}};
 		// - ÄÃ·³¸í »ý¼º
 		String[] cutColumnNames = {"ÄÆ", "°¡°Ý"};
 		String[] permColumnNames = {"ÀÏ¹ÝÆß", "°¡°Ý"};
@@ -34,16 +36,18 @@ public class UserPrice extends JFrame{
 		String[] BleachingColumnNames = {"Å»»ö", "°¡°Ý"};
 		String[] clinicColumnNames = {"¸ð¹ß & µÎÇÇ", "°¡°Ý"};
 		
-		
-		dtmCutInfo = new DefaultTableModel(rowCut, cutColumnNames);
-		dtmPermInfo = new DefaultTableModel(rowPerm, permColumnNames);
-		dtmPermSpecialInfo = new DefaultTableModel(rowSpecialPerm, permSpecialColumnNames);
-		dtmDyeInfo = new DefaultTableModel(rowDyeing, DeyingColumnNames);
-		dtmBleachingInfo = new DefaultTableModel(rowBleching, BleachingColumnNames);
-		dtmClinicInfo = new DefaultTableModel(rowClinic, clinicColumnNames);
+		dtmCutInfo = new DefaultTableModel(cutColumnNames, 0);
+		dtmPermInfo = new DefaultTableModel(permColumnNames, 0);
+		dtmPermSpecialInfo = new DefaultTableModel(permSpecialColumnNames, 0);
+		dtmDyeInfo = new DefaultTableModel(DeyingColumnNames, 0);
+		dtmBleachingInfo = new DefaultTableModel(BleachingColumnNames, 0);
+		dtmClinicInfo = new DefaultTableModel(clinicColumnNames, 0);
 		
 		//2. View »ý¼ºÇÏ°í, Model°ú has a °ü°è ¼³Á¤
 		jtCutList = new JTable(dtmCutInfo) {
+//			public Class<?> getColumnClass(int column){//ÄÃ·³¿¡ ÀÔ·ÂµÈ µ¥ÀÌÅÍÇüÀ» ±×´ë·Î º¸¿©ÁØ´Ù
+//				return getValueAt(0, column).getClass();
+//			}
 			@Override
 			public boolean isCellEditable(int row, int column) {//Å×ÀÌºíÀ» Á÷Á¢ ¼öÁ¤ÇÏÁö ¸øÇÏ°Ô ¸·À½
 				return false;
@@ -51,6 +55,9 @@ public class UserPrice extends JFrame{
 		};
 		
 		jtPermList = new JTable(dtmPermInfo) {
+//			public Class<?> getColumnClass(int column){
+//				return getValueAt(0, column).getClass();
+//			}
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -58,6 +65,9 @@ public class UserPrice extends JFrame{
 		};
 		
 		jtSpecialPermList = new JTable(dtmPermSpecialInfo) {
+//			public Class<?> getColumnClass(int column){
+//				return getValueAt(0, column).getClass();
+//			}
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -65,6 +75,9 @@ public class UserPrice extends JFrame{
 		};
 		
 		jtDyeingList = new JTable(dtmDyeInfo) {
+//			public Class<?> getColumnClass(int column){
+//				return getValueAt(0, column).getClass();
+//			}
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -72,6 +85,9 @@ public class UserPrice extends JFrame{
 		};
 		
 		jtBleachingList = new JTable(dtmBleachingInfo) {
+//			public Class<?> getColumnClass(int column){
+//				return getValueAt(0, column).getClass();
+//			}
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -79,11 +95,16 @@ public class UserPrice extends JFrame{
 		};
 		
 		jtClinicList = new JTable(dtmClinicInfo) {
+//			public Class<?> getColumnClass(int column){
+//				return getValueAt(0, column).getClass();
+//			}
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
 		};
+		
+		
 		
 		//ÄÃ·³ÀÇ ³ÐÀÌ º¯°æ
 		//ÄÆ
@@ -112,6 +133,8 @@ public class UserPrice extends JFrame{
 		jtDyeingList.setRowHeight(40);
 		jtBleachingList.setRowHeight(40);
 		jtClinicList.setRowHeight(40);
+		
+//		UsePriceEvt upe = new UsePriceEvt(this);
 		
 		JScrollPane jspCut = new JScrollPane(jtCutList);
 		JScrollPane jspPerm = new JScrollPane(jtPermList);
@@ -151,6 +174,8 @@ public class UserPrice extends JFrame{
 		add(jlDyeing);
 		add(jlClinic);
 		
+		UsePriceEvt upe = new UsePriceEvt(this);//////////////////////////////////////////////////////////////////
+		
 		setBounds(10, 10, 700, 700);
 		setVisible(true);
 		setResizable(false);
@@ -158,37 +183,49 @@ public class UserPrice extends JFrame{
 		
 	}//UserPrice
 	
-	
-	
+	public DefaultTableModel getDtmCutInfo() {
+		return dtmCutInfo;
+	}   
+
+	public DefaultTableModel getDtmPermInfo() {
+		return dtmPermInfo;
+	}
+
+	public DefaultTableModel getDtmPermSpecialInfo() {
+		return dtmPermSpecialInfo;
+	}
+
+	public DefaultTableModel getDtmDyeInfo() {
+		return dtmDyeInfo;
+	}
+
+	public DefaultTableModel getDtmBleachingInfo() {
+		return dtmBleachingInfo;
+	}
+
+	public DefaultTableModel getDtmClinicInfo() {
+		return dtmClinicInfo;
+	}
+
 	public JTable getJtCutList() {
 		return jtCutList;
 	}
-
-
 
 	public JTable getJtPermList() {
 		return jtPermList;
 	}
 
-
-
 	public JTable getJtSpecialPermList() {
 		return jtSpecialPermList;
 	}
-
-
 
 	public JTable getJtDyeingList() {
 		return jtDyeingList;
 	}
 
-
-
 	public JTable getJtBleachingList() {
 		return jtBleachingList;
 	}
-
-
 
 	public JTable getJtClinicList() {
 		return jtClinicList;
@@ -198,6 +235,8 @@ public class UserPrice extends JFrame{
 
 	public static void main(String[] args) {
 		new UserPrice();
+//		UserPrice up = new UserPrice();
+//		System.out.println(up.jtCutList);
 	}//main
 
 }//class
