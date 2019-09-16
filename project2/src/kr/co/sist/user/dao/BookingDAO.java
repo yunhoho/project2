@@ -1,8 +1,5 @@
 package kr.co.sist.user.dao;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,9 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import kr.co.sist.user.vo.DesignerDateVO;
+import kr.co.sist.user.vo.HairTypeVO;
 
 
 public class BookingDAO {
