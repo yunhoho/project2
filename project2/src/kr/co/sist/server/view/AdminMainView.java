@@ -14,6 +14,7 @@ public class AdminMainView extends JFrame{
 	private AdminPassword ap;
 	private BookingView bv;
 	private EmpMainView emv;
+	private CalcView cv;
 	
 	public AdminMainView() {
 		JTabbedPane jtp=new JTabbedPane();
@@ -22,10 +23,11 @@ public class AdminMainView extends JFrame{
 		ap=new AdminPassword();
 		bv=new BookingView();
 		emv=new EmpMainView();
+		cv=new CalcView();
 		
 		jtp.addTab("예약현황", bv);
 		jtp.addTab("고객데이터", cd);
-		jtp.addTab("정산", new JLabel());
+		jtp.addTab("정산", cv);
 		jtp.addTab("직원관리", emv);
 		jtp.addTab("메뉴관리", new JLabel());
 		jtp.addTab("관리자설정", ap);

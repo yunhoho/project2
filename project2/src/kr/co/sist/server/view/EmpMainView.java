@@ -88,25 +88,25 @@ public class EmpMainView extends JPanel {
 		
 	}//EmpMain
 
-//	public DefaultTableModel getDtmEmpList() {
-//		return dtmEmpList;
-//	}
-//
-//	public JTable getJtEmpList() {
-//		return jtEmpList;
-//	}
-//
-//	public JButton getJbtAddForm() {
-//		return jbtAddForm;
-//	}
-//
-//	public JTabbedPane getJtp() {
-//		return jtp;
-//	}
+	public DefaultTableModel getDtmEmpList() {
+		return dtmEmpList;
+	}
 
-//	public static void main(String[] args) {
-//		new EmpMainView();
-//	
-//	}//main	
+	public JTable getJtEmpList() {
+		return jtEmpList;
+	}
+
+	public JButton getJbtAddForm() {
+		return jbtAddForm;
+	}
+
+	public JButton getJbtUpdateForm() {
+		return jbtUpdateForm;
+	}
+
+	public JButton getJbtDelete() {
+		return jbtDelete;
+	}
+
 
 }//class
