@@ -2,15 +2,17 @@ package kr.co.sist.user.view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.ScrollPane;
-import java.awt.Scrollbar;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -24,7 +26,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
-public class Booking extends JPanel {
+public class Booking extends JPanel{
 
 	private JLabel jlblName,jlblPhone,jlblGender,jlblDesigner,jlblDate,
 	jlblHairType,jlblTotal,jlblNote,jlblPass,
@@ -36,11 +38,10 @@ public class Booking extends JPanel {
 	private JTextField jtfName,jtfPhone;
 	private JPasswordField jtfPass;
 	
+	private DefaultComboBoxModel<String> dcbDesigner,dcbTime;
 	private JComboBox<String> jcbDesigner,jcbTime;
+	private DefaultComboBoxModel<Integer> dcbYear,dcbMonth,dcbDay;
 	private JComboBox<Integer> jcbYear,jcbMonth,jcbDay;
-	
-	private DefaultListModel<String> dlmHairName,dlmHair;
-	private JList<String> jlstHairName,jlstHair;
 	
 	private DefaultTableModel dtmHairName,dtmHair;
 	private JTable jtHairName,jtHair;
@@ -50,6 +51,9 @@ public class Booking extends JPanel {
 	private JButton jbtnAdd,jbtnDelete,jbtnBook,jbtnCancle;
 	
 	private LineBorder line;
+	
+	private JScrollPane jspHairName;
+	
 	
 	public Booking() {
 		
@@ -118,21 +122,48 @@ public class Booking extends JPanel {
 		bgHairType.add(jrbDye);
 		bgHairType.add(jrbClinic);
 		
+//		이벤트 연결
+		BookingEvt bkEvt=new BookingEvt(this);
+		
 //		ComboBox
-		jcbDesigner=new JComboBox<String>();
-		jcbTime=new JComboBox<String>();
+		dcbDesigner=new DefaultComboBoxModel<String>();
+		dcbDesigner=bkEvt.hairDesigner();
+		jcbDesigner=new JComboBox<String>(dcbDesigner);
 		
-		jcbYear=new JComboBox<Integer>();
-		jcbMonth=new JComboBox<Integer>();
-		jcbDay=new JComboBox<Integer>();
+		jcbDesigner.addActionListener(bkEvt);
 		
-//		JList
-		dlmHairName=new DefaultListModel<String>();
-		jlstHairName=new JList<String>(dlmHairName);
-		JScrollPane jspHairName=new JScrollPane(jlstHairName);
-		dlmHair=new DefaultListModel<String>();
-		jlstHair=new JList<String>(dlmHair);
-		JScrollPane jspHair=new JScrollPane(jlstHair);
+		dcbYear=new DefaultComboBoxModel<Integer>();
+		dcbYear=bkEvt.Date().get(0);
+		jcbYear=new JComboBox<Integer>(dcbYear);
+
+		jcbYear.addActionListener(bkEvt);
+		
+		dcbMonth=new DefaultComboBoxModel<Integer>();
+		jcbMonth=new JComboBox<Integer>(dcbMonth);
+		
+		jcbMonth.addActionListener(bkEvt);
+		
+		dcbDay=new DefaultComboBoxModel<Integer>();
+		jcbDay=new JComboBox<Integer>(dcbDay);
+		
+		jcbDay.addActionListener(bkEvt);
+		
+		dcbTime=new DefaultComboBoxModel<String>();
+		jcbTime=new JComboBox<String>(dcbTime);
+		
+		jcbTime.addActionListener(bkEvt);
+		
+//		JTable
+		String[] column= {"",""};
+		dtmHairName=new DefaultTableModel(column,0);		
+		jtHairName=new JTable(dtmHairName);
+		jspHairName=new JScrollPane(jtHairName);
+		
+		jrbCut.addActionListener(bkEvt);
+		jrbPerm.addActionListener(bkEvt);
+		jrbDye.addActionListener(bkEvt);
+		jrbClinic.addActionListener(bkEvt);
+		
 		
 //		JButton
 		jbtnAdd=new JButton("추가");
@@ -183,7 +214,7 @@ public class Booking extends JPanel {
 		
 		jspHairName.setBounds(getX()+350, getY()+260, 305, 60);
 		jbtnAdd.setBounds(getX()+595, getY()+325, 60, 20);
-		jspHair.setBounds(getX()+350, getY()+350, 305, 60);
+//		jspHair.setBounds(getX()+350, getY()+350, 305, 60);
 		jbtnDelete.setBounds(getX()+595, getY()+415, 60, 20);
 		
 		jlblImg.setBounds(getX()+30, getY()+30, 300, 280);
@@ -219,7 +250,7 @@ public class Booking extends JPanel {
 		add(jpHairType);
 		add(jspHairName);
 		add(jbtnAdd);
-		add(jspHair);
+//		add(jspHair);
 		add(jbtnDelete);
 		add(jlblTotal);
 		add(jtaTotal);
@@ -232,20 +263,175 @@ public class Booking extends JPanel {
 		add(jlblImg);
 		
 		setLayout(null);
-		
-//		JScrollPane jscp=new JScrollPane
-//				(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//		setContentPane(jscp);
-		
-		
-		
-		
-//		setBounds(10, 10, 700, 400);
-//		setVisible(true);
-//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+
+
+	public JRadioButton getJrbFemale() {
+		return jrbFemale;
+	}
+
+
+	public JRadioButton getJrbMale() {
+		return jrbMale;
+	}
+
+
+	public JRadioButton getJrbCut() {
+		return jrbCut;
+	}
+
+
+	public JRadioButton getJrbPerm() {
+		return jrbPerm;
+	}
+
+
+	public JRadioButton getJrbDye() {
+		return jrbDye;
+	}
+
+
+	public JRadioButton getJrbClinic() {
+		return jrbClinic;
+	}
+
+
+	public JTextField getJtfName() {
+		return jtfName;
+	}
+
+
+	public JTextField getJtfPhone() {
+		return jtfPhone;
+	}
+
+
+	public JPasswordField getJtfPass() {
+		return jtfPass;
+	}
+
+
+	public JComboBox<String> getJcbDesigner() {
+		return jcbDesigner;
+	}
+
+
+	public JComboBox<String> getJcbTime() {
+		return jcbTime;
+	}
+
+
+	public JComboBox<Integer> getJcbYear() {
+		return jcbYear;
+	}
+
+
+	public JComboBox<Integer> getJcbMonth() {
+		return jcbMonth;
+	}
+
+
+	public JComboBox<Integer> getJcbDay() {
+		return jcbDay;
+	}
+
+
+	public DefaultTableModel getDtmHairName() {
+		return dtmHairName;
+	}
+
+
+	public DefaultTableModel getDtmHair() {
+		return dtmHair;
+	}
+
+
+	public JTable getJtHairName() {
+		return jtHairName;
+	}
+
+
+	public JTable getJtHair() {
+		return jtHair;
+	}
+
+
+	public JTextArea getJtaTotal() {
+		return jtaTotal;
+	}
+
+
+	public JTextArea getJtaNote() {
+		return jtaNote;
+	}
+
+
+	public JButton getJbtnAdd() {
+		return jbtnAdd;
+	}
+
+
+	public JButton getJbtnDelete() {
+		return jbtnDelete;
+	}
+
+
+	public JButton getJbtnBook() {
+		return jbtnBook;
+	}
+
+
+	public JButton getJbtnCancle() {
+		return jbtnCancle;
+	}
+
+
+	public JScrollPane getJspHairName() {
+		return jspHairName;
+	}
+
+
+	/**
+	 * @return the dcbDesigner
+	 */
+	public DefaultComboBoxModel<String> getDcbDesigner() {
+		return dcbDesigner;
+	}
+
+
+	/**
+	 * @return the dcbTime
+	 */
+	public DefaultComboBoxModel<String> getDcbTime() {
+		return dcbTime;
+	}
+
+
+	/**
+	 * @return the dcbYear
+	 */
+	public DefaultComboBoxModel<Integer> getDcbYear() {
+		return dcbYear;
+	}
+
+
+	/**
+	 * @return the dcbMonth
+	 */
+	public DefaultComboBoxModel<Integer> getDcbMonth() {
+		return dcbMonth;
+	}
+
+
+	/**
+	 * @return the dcbDay
+	 */
+	public DefaultComboBoxModel<Integer> getDcbDay() {
+		return dcbDay;
+	}
+
 	
-//	public static void main(String[] args) {
-//		new Booking();
-//	}
+	
+	
+	
 }

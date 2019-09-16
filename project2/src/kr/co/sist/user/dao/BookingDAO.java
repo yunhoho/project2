@@ -1,5 +1,8 @@
 package kr.co.sist.user.dao;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,251 +11,121 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.sist.user.vo.HairTypeVO;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 
 public class BookingDAO {
+	
 	private static BookingDAO bDAO;
-
+	
 	private BookingDAO() {
-
-	}// BookingDAO
-
+		
+	}//BookingDAO
+	
 	public static BookingDAO getInstance() {
-		if (bDAO == null) {
-			bDAO = new BookingDAO();
-		} // end if
-		return bDAO;
-	}// getinstance
-
-	private Connection getConnection() throws SQLException {
-		Connection con = null;
-		// 1. µå¶óÀÌ¹ö ·Îµù(ojdbc8.jar)
+		if(bDAO==null) {
+			bDAO=new BookingDAO();
+		}
+		return bDAO; 
+	}//getInstance
+	
+	private Connection getConn() throws SQLException {
+		Connection con=null;
+		
+		//1.µå¶óÀÌ¹ö ·Îµù
 		try {
 			Class.forName("oracle.jdbc.OracleDriver");
 		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// 2.Ä¿³Ø¼Ç ¾ò±â
-		String url = "jdbc:oracle:thin:@211.63.89.137:1521:orcl";//127.0.0.1   , localhost
-		String id = "hair";
-		String pass = "salon";
-
-		con = DriverManager.getConnection(url, id, pass);
-
+		
+		String url="jdbc:oracle:thin:@127.0.0.1:1521:orcl";
+		String id="hair";
+		String pass="salon";
+		
+		con=DriverManager.getConnection(url, id, pass);
+	
 		return con;
-	}// getConnection
+	}//getConn
 	
-	public List<HairTypeVO> selectCutHairType() throws SQLException {
-		List<HairTypeVO> list = new ArrayList<HairTypeVO>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
+	public List<HairTypeVO> selectHairType() throws SQLException{
+		
+		List<HairTypeVO> hairTypeList=new ArrayList<HairTypeVO>();
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
 		
 		try {
-			con = getConnection();
-			StringBuilder selectHairType = new StringBuilder();
-			selectHairType
-			.append(" select t_name, t_category,t_type,t_code, price  ")
-			.append(" from treatment ")
-			.append(" where t_type like 'ÄÆ' ");
-//			.append(" where t_type like %? ");
+			//2.Ä¿³Ø¼Ç ¾ò±â
+			con=getConn();
+			//3.Äõ¸®¹® »ý¼º°´Ã¼ ¾ò±â: lunchÅ×ÀÌºí¿¡¼­ ¹øÈ£,ÀÌ¹ÌÁö,µµ½Ã¶ô¸í(ÄÚµå),°¡°Ý
+			StringBuilder selectHairT=new StringBuilder();
+			selectHairT
+			.append(" select t_code,t_type,t_category,t_name,price")
+			.append(" from treatment");
+
+			pstmt=con.prepareStatement(selectHairT.toString());
+			//4
+			//5
+			rs=pstmt.executeQuery();
 			
-			pstmt = con.prepareStatement(selectHairType.toString());
-			
-//			pstmt.setString(1, "ÄÆ");
-			rs = pstmt.executeQuery();
-			HairTypeVO htvo = null;
+			HairTypeVO htVO=null;
 			while(rs.next()) {
-				htvo = new HairTypeVO(rs.getString("t_type"), rs.getString("t_category"), rs.getString("t_name"), rs.getString("t_code"), rs.getInt("price"));
-				list.add(htvo);
+				htVO=new HairTypeVO(rs.getString("t_type"),rs.getString("t_category"),
+								rs.getString("t_name"),rs.getString("t_code"),rs.getInt("price"));
+				hairTypeList.add(htVO);
 			}//end while
 			
 		}finally {
-			if(rs != null) {rs.close();}
-			if(pstmt != null) {pstmt.close();}
-			if(con != null) {con.close();}
-		}//end finally
-		
-		return list;
-	}//selectAllHairType
-	
-	public List<HairTypeVO> selectPermHairType() throws SQLException {
-		List<HairTypeVO> list = new ArrayList<HairTypeVO>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			con = getConnection();
-			StringBuilder selectHairType = new StringBuilder();
-			selectHairType
-			.append(" select t_name, t_category,t_type,t_code, price  ")
-			.append(" from treatment ")
-			.append(" where t_category like 'ÀÏ¹ÝÆß' ");
-//			.append(" where t_type like %? ");
-			
-			pstmt = con.prepareStatement(selectHairType.toString());
-			
-//			pstmt.setString(1, "ÄÆ");
-			rs = pstmt.executeQuery();
-			HairTypeVO htvo = null;
-			while(rs.next()) {
-				htvo = new HairTypeVO(rs.getString("t_type"), rs.getString("t_category"), rs.getString("t_name"), rs.getString("t_code"), rs.getInt("price"));
-				list.add(htvo);
-			}//end while
-			
-		}finally {
-			if(rs != null) {rs.close();}
-			if(pstmt != null) {pstmt.close();}
-			if(con != null) {con.close();}
-		}//end finally
-		
-		return list;
-	}//selectPermHairType
-	
-	public List<HairTypeVO> selectSpecialPermType() throws SQLException {
-		List<HairTypeVO> list = new ArrayList<HairTypeVO>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			con = getConnection();
-			StringBuilder selectSpecialPermType = new StringBuilder();
-			selectSpecialPermType
-			.append(" select t_name, t_category,t_type,t_code, price  ")
-			.append(" from treatment ")
-			.append(" where t_category like 'Æ¯¼öÆß' ");
-//			.append(" where t_type like %? ");
-			
-			pstmt = con.prepareStatement(selectSpecialPermType.toString());
-			
-//			pstmt.setString(1, "ÄÆ");
-			rs = pstmt.executeQuery();
-			HairTypeVO htvo = null;
-			while(rs.next()) {
-				htvo = new HairTypeVO(rs.getString("t_type"), rs.getString("t_category"), rs.getString("t_name"), rs.getString("t_code"), rs.getInt("price"));
-				list.add(htvo);
-			}//end while
-			
-		}finally {
-			if(rs != null) {rs.close();}
-			if(pstmt != null) {pstmt.close();}
-			if(con != null) {con.close();}
-		}//end finally
-		
-		return list;
-	}//selectPermHairType
-	
-	public List<HairTypeVO> selectDyeType() throws SQLException {
-		List<HairTypeVO> list = new ArrayList<HairTypeVO>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			con = getConnection();
-			StringBuilder selectDyeType = new StringBuilder();
-			selectDyeType
-			.append(" select t_name, t_category,t_type,t_code, price  ")
-			.append(" from treatment ")
-			.append(" where t_category like '¿°»ö' ");
-//			.append(" where t_type like %? ");
-			
-			pstmt = con.prepareStatement(selectDyeType.toString());
-			
-//			pstmt.setString(1, "ÄÆ");
-			rs = pstmt.executeQuery();
-			HairTypeVO htvo = null;
-			while(rs.next()) {
-				htvo = new HairTypeVO(rs.getString("t_type"), rs.getString("t_category"), rs.getString("t_name"), rs.getString("t_code"), rs.getInt("price"));
-				list.add(htvo);
-			}//end while
-			
-		}finally {
-			if(rs != null) {rs.close();}
-			if(pstmt != null) {pstmt.close();}
-			if(con != null) {con.close();}
-		}//end finally
-		
-		return list;
-	}//selectPermHairType
-	
-	public List<HairTypeVO> selectBleachType() throws SQLException {
-		List<HairTypeVO> list = new ArrayList<HairTypeVO>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			con = getConnection();
-			StringBuilder selectBleachType = new StringBuilder();
-			selectBleachType
-			.append(" select t_name, t_category,t_type,t_code, price  ")
-			.append(" from treatment ")
-			.append(" where t_category like 'Å»»ö' ");
-//			.append(" where t_type like %? ");
-			
-			pstmt = con.prepareStatement(selectBleachType.toString());
-			
-//			pstmt.setString(1, "ÄÆ");
-			rs = pstmt.executeQuery();
-			HairTypeVO htvo = null;
-			while(rs.next()) {
-				htvo = new HairTypeVO(rs.getString("t_type"), rs.getString("t_category"), rs.getString("t_name"), rs.getString("t_code"), rs.getInt("price"));
-				list.add(htvo);
-			}//end while
-			
-		}finally {
-			if(rs != null) {rs.close();}
-			if(pstmt != null) {pstmt.close();}
-			if(con != null) {con.close();}
-		}//end finally
-		
-		return list;
-	}//selectBleachType
-	
-	public List<HairTypeVO> selectClinicType() throws SQLException {
-		List<HairTypeVO> list = new ArrayList<HairTypeVO>();
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			con = getConnection();
-			StringBuilder selectClinicType = new StringBuilder();
-			selectClinicType
-			.append(" select t_name, t_category,t_type,t_code, price  ")
-			.append(" from treatment ")
-			.append(" where t_type like 'Å¬¸®´Ð' ");
-//			.append(" where t_type like %? ");
-			
-			pstmt = con.prepareStatement(selectClinicType.toString());
-			
-//			pstmt.setString(1, "ÄÆ");
-			rs = pstmt.executeQuery();
-			HairTypeVO htvo = null;
-			while(rs.next()) {
-				htvo = new HairTypeVO(rs.getString("t_type"), rs.getString("t_category"), rs.getString("t_name"), rs.getString("t_code"), rs.getInt("price"));
-				list.add(htvo);
-			}//end while
-			
-		}finally {
-			if(rs != null) {rs.close();}
-			if(pstmt != null) {pstmt.close();}
-			if(con != null) {con.close();}
-		}//end finally
-		
-		return list;
-	}//selectBleachType
-	
-	public static void main(String[] args) {
-		BookingDAO bd = BookingDAO.getInstance();
-		try {
-			System.out.println(bd.selectBleachType());
-		} catch (SQLException e) {
-			e.printStackTrace();
+			if(rs!=null) {rs.close();}//end if
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
 		}
-	}//main
-}//class
+		
+		return hairTypeList;
+	}//selectHairType
+
+	public List<DesignerDateVO> selectDesigner() throws SQLException{
+		
+		List<DesignerDateVO> hairDesigner=new ArrayList<DesignerDateVO>();
+		
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			con=getConn();
+			
+			StringBuilder selectHairD=new StringBuilder();
+			selectHairD
+			.append(" select e.empno empno,e.p_code p_code,e.e_name e_name,p.p_charge p_charge")
+			.append(" from emp e")
+			.append(" inner join position_charge p")
+			.append(" on e.p_code=p.p_code")
+			.append(" order by e.p_code");
+			
+			pstmt=con.prepareStatement(selectHairD.toString());
+			
+			rs=pstmt.executeQuery();
+			
+			DesignerDateVO ddVO=null;
+			while(rs.next()) {
+				ddVO=new DesignerDateVO(rs.getString("e_name"),null,null,
+					null,null,rs.getString("p_code"),rs.getInt("p_charge"),rs.getInt("empno"));
+			
+				hairDesigner.add(ddVO);
+			}//end while
+			
+		}finally {
+			if(rs!=null) {rs.close();}//end if
+			if(pstmt!=null) {pstmt.close();}//end if
+			if(con!=null) {con.close();}//end if
+		}
+		
+		return hairDesigner;
+	}
+}
