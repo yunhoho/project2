@@ -1,38 +1,31 @@
 package kr.co.sist.server.view;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-public class CustomerData extends JPanel implements ActionListener{
-	private DefaultTableModel dtmClientList;
-	private JTable jtClientList;
-	private JTextField jtfClientName;
-	private JLabel jlbClient;
+import kr.co.sist.server.controller.CustomerDataEvt;
+
+public class CustomerData extends JPanel {
+	private DefaultTableModel dtmCustomerList;
+	private JTable jtCustomerList;
+	private JTextField jtfCustomerName;
+	private JLabel jlbCustomer;
 	private JButton jbtSearch;
 
 
 	public CustomerData() {
-		String[] clientColumnNames= {"고객명","전화번호","성별","마지막 시술일자"};
-		dtmClientList=new DefaultTableModel(clientColumnNames,0);
+		String[] customerColumnNames= {"고객명","전화번호","성별","마지막 시술일자"};
+		dtmCustomerList=new DefaultTableModel(customerColumnNames,0);
 
-		jlbClient=new JLabel("고객명");
+		jlbCustomer=new JLabel("고객명");
 		
 		//컬럼에 입력된 데이터형을 그대로 보여주기
-		jtClientList=new JTable(dtmClientList) {
+		jtCustomerList=new JTable(dtmCustomerList) {
 
 			@Override
 			public Class<?> getColumnClass(int column) {
@@ -46,39 +39,67 @@ public class CustomerData extends JPanel implements ActionListener{
 			
 		};//jt
 		
-		jtClientList.getColumnModel().getColumn(0).setPreferredWidth(80);
-		jtClientList.getColumnModel().getColumn(1).setPreferredWidth(120);
-		jtClientList.getColumnModel().getColumn(2).setPreferredWidth(50);
-		jtClientList.getColumnModel().getColumn(3).setPreferredWidth(100);
-		jtClientList.setRowHeight(20);
+		jtCustomerList.getColumnModel().getColumn(0).setPreferredWidth(80);
+		jtCustomerList.getColumnModel().getColumn(1).setPreferredWidth(120);
+		jtCustomerList.getColumnModel().getColumn(2).setPreferredWidth(50);
+		jtCustomerList.getColumnModel().getColumn(3).setPreferredWidth(100);
+		jtCustomerList.setRowHeight(20);
 		
 		jbtSearch=new JButton("검색");
-		jtfClientName=new JTextField(15);
+		jtfCustomerName=new JTextField(15);
 		/////////////////고객 데이터 리스트//////////////
 		
-		JScrollPane jspClientList=new JScrollPane(jtClientList);
+		JScrollPane jspCustomerList=new JScrollPane(jtCustomerList);
 		
-		JPanel jpClientData=new JPanel();
-		jpClientData.add(jlbClient);
-		jpClientData.add(jtfClientName);
-		jpClientData.add(jbtSearch);
+		JPanel jpCustomerData=new JPanel();
+		jpCustomerData.add(jlbCustomer);
+		jpCustomerData.add(jtfCustomerName);
+		jpCustomerData.add(jbtSearch);
 
+		CustomerDataEvt cdEVT=new CustomerDataEvt(this);
+		dtmCustomerList=cdEVT.setCustomerList(null);
+		jtfCustomerName.addActionListener(cdEVT);
 		
-		jpClientData.setBounds(0, 10, 800, 35);
-		jspClientList.setBounds(0,50, 790, 385);
-		add(jpClientData);
-		add(jspClientList);
+		
+		jpCustomerData.setBounds(0, 10, 800, 35);
+		jspCustomerList.setBounds(0,50, 790, 385);
+		add(jpCustomerData);
+		add(jspCustomerList);
 
 		setLayout(null);
 		setBounds(100,100,800,500);
 
 		
-	}//ClientData
+	}//CustomerData
+
+
+	public DefaultTableModel getDtmCustomerList() {
+		return dtmCustomerList;
+	}
+
+
+	public JTable getJtCustomerList() {
+		return jtCustomerList;
+	}
+
+
+	public JTextField getJtfCustomerName() {
+		return jtfCustomerName;
+	}
+
+
+	public JLabel getJlbCustomer() {
+		return jlbCustomer;
+	}
+
+
+	public JButton getJbtSearch() {
+		return jbtSearch;
+	}
 	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-	}//actionPerformed
+	
+
+	
 
 
 
