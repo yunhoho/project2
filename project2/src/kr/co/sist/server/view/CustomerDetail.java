@@ -1,4 +1,4 @@
-package kr.co.sist.server;
+package kr.co.sist.server.view;
 
 import java.awt.Font;
 import java.awt.Image;
@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -120,29 +121,29 @@ public class CustomerDetail extends JFrame implements ActionListener{
 		jlImg.setBounds(getX()+70,getY()+ 60, 200, 215);
 		jbtImg.setBounds(getX()+70, getY() +290 , 200, 30);
 		jbtImg.setBounds(getX()+70, getY() +290 , 200, 30);
-		jlbDesigner.setBounds(getX()+70, getY() +510 , 200, 30);
-		jcbDesigner.setBounds(getX()+70, getY() +545 , 200, 30);
+		jlbDesigner.setBounds(getX()+335, getY() +420 , 200, 30);
+		jcbDesigner.setBounds(getX()+335, getY() +460 , 280, 30);
 		jlbInfo.setBounds(getX()+335 , getY()+ 60, 100, 30);
 		jlbName.setBounds(getX()+335 , getY()+ 105, 100, 30);
 		jtfName.setBounds(getX()+415 , getY()+ 105, 200, 30);
-		jlbPhone.setBounds(getX()+335 , getY()+ 175, 100, 30);
-		jtfPhone.setBounds(getX()+415 , getY()+ 175, 200, 30);
-		jlbGender.setBounds(getX()+335 , getY()+ 210, 100, 30);
-		jrbF.setBounds(getX()+415 , getY()+ 210, 100, 30);
-		jrbM.setBounds(getX()+515 , getY()+ 210, 100, 30);
-		jlbHair.setBounds(getX()+335 , getY()+ 265, 100, 30);
-		jlbHairType.setBounds(getX()+335 , getY()+ 310, 100, 30);
-		jcbHairType.setBounds(getX()+415 , getY()+ 310, 200, 30);
-		jlbThickness.setBounds(getX()+335 , getY()+ 345, 100, 30);
-		jcbThickness.setBounds(getX()+415 , getY()+ 345, 200, 30);
-		jlbColor.setBounds(getX()+335 , getY()+ 380, 100, 30);
-		jcbColor.setBounds(getX()+415 , getY()+ 380, 200, 30);
-		jlbScalp.setBounds(getX()+335 , getY()+ 415, 100, 30);
-		jcbScalp.setBounds(getX()+415 , getY()+ 415, 200, 30);
-		jlbNote.setBounds(getX()+335 , getY()+ 470, 200, 30);
-		jspNote.setBounds(getX()+335 , getY()+ 505, 280, 70);
-		jbtChange.setBounds(getX()+155 , getY()+ 615, 155, 35);
-		jbtClose.setBounds(getX()+370, getY()+ 615, 155, 35);
+		jlbPhone.setBounds(getX()+335 , getY()+ 140, 100, 30);
+		jtfPhone.setBounds(getX()+415 , getY()+ 140, 200, 30);
+		jlbGender.setBounds(getX()+335 , getY()+ 175, 100, 30);
+		jrbF.setBounds(getX()+415 , getY()+ 175, 100, 30);
+		jrbM.setBounds(getX()+515 , getY()+ 175, 100, 30);
+		jlbHair.setBounds(getX()+335 , getY()+ 220, 100, 30);
+		jlbHairType.setBounds(getX()+335 , getY()+ 265, 100, 30);
+		jcbHairType.setBounds(getX()+415 , getY()+ 265, 200, 30);
+		jlbThickness.setBounds(getX()+335 , getY()+ 300, 100, 30);
+		jcbThickness.setBounds(getX()+415 , getY()+ 300, 200, 30);
+		jlbColor.setBounds(getX()+335 , getY()+ 335, 100, 30);
+		jcbColor.setBounds(getX()+415 , getY()+ 335, 200, 30);
+		jlbScalp.setBounds(getX()+335 , getY()+ 370, 100, 30);
+		jcbScalp.setBounds(getX()+415 , getY()+ 370, 200, 30);
+		jlbNote.setBounds(getX()+70 , getY()+ 340, 200, 30);
+		jspNote.setBounds(getX()+70 , getY()+ 375, 200, 120);
+		jbtChange.setBounds(getX()+155 , getY()+ 540, 155, 35);
+		jbtClose.setBounds(getX()+370, getY()+ 540, 155, 35);
 		
 		//¹èÄ¡
 		add(jlImg);
@@ -173,7 +174,7 @@ public class CustomerDetail extends JFrame implements ActionListener{
 		
 		//
 		setLayout(null);
-		setBounds(100,100,700,760);
+		setBounds(100,100,700,680);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
