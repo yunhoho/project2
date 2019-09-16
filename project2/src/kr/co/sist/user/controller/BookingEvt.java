@@ -4,11 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import kr.co.sist.user.dao.BookingDAO;
@@ -54,7 +53,10 @@ public class BookingEvt extends MouseAdapter implements ActionListener {
 		
 		try {
 			hairTypeList = bDAO.selectHairType();
-			
+			if( flag == null) {
+				JOptionPane.showMessageDialog(bk, "시술을 먼저 선택하시어야합니다.!!!");
+				return;
+			}//end if
 			for(int i=0; i<hairTypeList.size(); i++) {
 				if(hairTypeList.get(i).getHairType().equals("컷")) {
 					cutCount+=1;
@@ -222,28 +224,29 @@ public class BookingEvt extends MouseAdapter implements ActionListener {
 		
 	}//chooseHairDesigner
 	
-	public List<DefaultComboBoxModel> Date() {
-		
-		DefaultComboBoxModel<Integer> dcbYear=new DefaultComboBoxModel<Integer>();
-		DefaultComboBoxModel<Integer> dcbMonth=new DefaultComboBoxModel<Integer>();
-		DefaultComboBoxModel<Integer> dcbDay=new DefaultComboBoxModel<Integer>();
-		
-		List<DefaultComboBoxModel> dateList=new ArrayList<DefaultComboBoxModel>();
-		
-		Calendar date=Calendar.getInstance();
-		
-		for(int i=0; i<2; i++) {
-			dcbYear.addElement(date.get(Calendar.YEAR)+i);
-		}
-		
-		for(int i=1; i<=12; i++) {
-			dcbMonth.addElement(date.get(Calendar.MONTH));
-		}
-		
-		for()
-		dateList.add(dcbYear);			
-		return dateList;
-	}//Date
+//	public List<DefaultComboBoxModel> Date() {
+//		
+//		DefaultComboBoxModel<Integer> dcbYear=new DefaultComboBoxModel<Integer>();
+//		DefaultComboBoxModel<Integer> dcbMonth=new DefaultComboBoxModel<Integer>();
+//		DefaultComboBoxModel<Integer> dcbDay=new DefaultComboBoxModel<Integer>();
+//		
+//		List<DefaultComboBoxModel> dateList=new ArrayList<DefaultComboBoxModel>();
+//		
+//		Calendar date=Calendar.getInstance();
+//		
+//		for(int i=0; i<2; i++) {
+//			dcbYear.addElement(date.get(Calendar.YEAR)+i);
+//		}
+//		
+//		for(int i=1; i<=12; i++) {
+//			dcbMonth.addElement(date.get(Calendar.MONTH));
+//		}
+//		
+//		date.get(Calendar)
+//		for(int i=1; i<=)
+//		dateList.add(dcbYear);			
+//		return dateList;
+//	}//Date
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
@@ -270,7 +273,6 @@ public class BookingEvt extends MouseAdapter implements ActionListener {
 		
 		if(ae.getSource()==bk.getJcbYear()) {
 			y_flag=(int)bk.getJcbDesigner().getSelectedItem();
-			D
 		}//end if
 		if(ae.getSource()==bk.getJcbMonth()) {
 			m_flag=(int)bk.getJcbDesigner().getSelectedItem();
