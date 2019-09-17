@@ -1,8 +1,7 @@
 package kr.co.sist.server.view;
 
-import java.awt.BorderLayout;
 
-import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,6 +13,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import kr.co.sist.server.controller.BookingServerEvt;
+import kr.co.sist.server.helper.MonthlyMaxDay;
+import kr.co.sist.server.vo.DateVO;
+
 @SuppressWarnings("serial")
 public class BookingView extends JPanel{
 
@@ -21,14 +24,16 @@ public class BookingView extends JPanel{
 	private JTable jtBookingList;
 	private JComboBox<String> jcbsrch, jcbYear1, jcbMonth1, jcbDay1,
 			jcbYear2,jcbMonth2, jcbDay2;
-	private ComboBoxModel<String> cbm;
+	private DefaultComboBoxModel<String> dcbmSrch, dcbmYear1,dcbmYear2,dcbmMonth1,dcbmMonth2,dcbmDay1,dcbmDay2;
 	private JTextField jtfsrchInput;
 	private JButton jbtsrch;
 	private JLabel jlsrchPeriod, jlDash;
 	private JPopupMenu jpm;
-	private JMenuItem bookingDetail, changeBooking, paymentFlag, deleteBooking;
+	private JMenuItem bookingDetail, paymentFlag, deleteBooking;
 	
-	private JPanel jpBookingList;
+	
+	
+	
 	
 	public BookingView() {
 		jlsrchPeriod=new JLabel("검색 기간");
@@ -52,37 +57,58 @@ public class BookingView extends JPanel{
 		jpm=new JPopupMenu();
 		
 		bookingDetail=new JMenuItem("시술상세정보");
-		changeBooking=new JMenuItem("시술사항변경");
 		paymentFlag=new JMenuItem("결제완료변경");
 		deleteBooking=new JMenuItem("예약 삭제");
 		
 		jpm.add(bookingDetail);
-		jpm.add(changeBooking);
 		jpm.add(paymentFlag);
 		jpm.add(deleteBooking);
 		
 		jtBookingList.setComponentPopupMenu(jpm);
 		
-		jcbsrch=new JComboBox<String>();
-		jcbsrch.addItem("고객명");
-		jcbsrch.addItem("디자이너명");
+		dcbmSrch=new DefaultComboBoxModel<String>();
+		dcbmSrch.addElement("고객명");
+		dcbmSrch.addElement("디자이너명");
+		jcbsrch=new JComboBox<String>(dcbmSrch);
+//		jcbsrch.addItem("고객명");
+//		jcbsrch.addItem("디자이너명");
 		
-		jcbYear1=new JComboBox<String>();
-		jcbMonth1=new JComboBox<String>();
-		jcbDay1=new JComboBox<String>();
-		jcbYear2=new JComboBox<String>();
-		jcbMonth2=new JComboBox<String>();
-		jcbDay2=new JComboBox<String>();
-		
-		jcbYear1.addItem("2019");
-		jcbYear2.addItem("2019");
-		jcbMonth1.addItem("1월");
-		jcbMonth2.addItem("1월");
-		jcbDay1.addItem("1일");
-		jcbDay2.addItem("1일");
+		dcbmYear1=new DefaultComboBoxModel<String>();
+		dcbmYear2=new DefaultComboBoxModel<String>();
+		dcbmMonth1=new DefaultComboBoxModel<String>();
+		dcbmMonth2=new DefaultComboBoxModel<String>();
 		
 		
 		
+		for(int i=2019; i<2022; i++) {
+			String year=Integer.toString(i);
+			dcbmYear1.addElement(year);
+			dcbmYear2.addElement(year);
+		}
+		
+		for(int i = 1; i<13; i++) {
+			String month=Integer.toString(i);
+			dcbmMonth1.addElement(month);
+			dcbmMonth2.addElement(month);
+		}
+//		dcbmDay1.addElement("1일");
+//		dcbmDay2.addElement("1일");
+		
+		BookingServerEvt bse=new BookingServerEvt(this);
+		
+		jcbYear1=new JComboBox<String>(dcbmYear1);
+		jcbMonth1=new JComboBox<String>(dcbmMonth1);
+		jcbYear2=new JComboBox<String>(dcbmYear2);
+		jcbMonth2=new JComboBox<String>(dcbmMonth2);
+		try {
+		jcbDay1=new JComboBox<String>(dcbmDay1);
+		jcbDay2=new JComboBox<String>(dcbmDay2);
+		}catch(NullPointerException e){
+			dcbmDay1=new DefaultComboBoxModel<String>();
+			jcbDay1=new JComboBox<String>(dcbmDay1);
+			dcbmDay2=new DefaultComboBoxModel<String>();
+			jcbDay2=new JComboBox<String>(dcbmDay2);
+		}
 		jbtsrch=new JButton("검색");
 		
 		jtfsrchInput=new JTextField(15);
@@ -123,7 +149,98 @@ public class BookingView extends JPanel{
 		setLayout(null);
 		setBounds(100,100,800,500);
 		
+		
+		jbtsrch.addActionListener(bse);
+		jcbMonth1.addActionListener(bse);
+		
+		
+		
 	}//BookingView
+
+
+	public DefaultTableModel getDtmBookingList() {
+		return dtmBookingList;
+	}
+
+
+	public JTable getJtBookingList() {
+		return jtBookingList;
+	}
+
+
+	public JComboBox<String> getJcbsrch() {
+		return jcbsrch;
+	}
+
+
+	public JComboBox<String> getJcbYear1() {
+		return jcbYear1;
+	}
+
+
+	public JComboBox<String> getJcbMonth1() {
+		return jcbMonth1;
+	}
+
+
+	public JComboBox<String> getJcbDay1() {
+		return jcbDay1;
+	}
+
+
+	public JComboBox<String> getJcbYear2() {
+		return jcbYear2;
+	}
+
+
+	public JComboBox<String> getJcbMonth2() {
+		return jcbMonth2;
+	}
+
+
+	public JComboBox<String> getJcbDay2() {
+		return jcbDay2;
+	}
+
+
+	public JTextField getJtfsrchInput() {
+		return jtfsrchInput;
+	}
+
+
+	public JButton getJbtsrch() {
+		return jbtsrch;
+	}
+
+
+	public JPopupMenu getJpm() {
+		return jpm;
+	}
+
+
+	public JMenuItem getBookingDetail() {
+		return bookingDetail;
+	}
+
+
+	public JMenuItem getPaymentFlag() {
+		return paymentFlag;
+	}
+
+
+	public JMenuItem getDeleteBooking() {
+		return deleteBooking;
+	}
+
+
+	public void setDcbmDay1(DefaultComboBoxModel<String> dcbmDay1) {
+		this.dcbmDay1 = dcbmDay1;
+	}
+
+
+
+
+
 
 
 	

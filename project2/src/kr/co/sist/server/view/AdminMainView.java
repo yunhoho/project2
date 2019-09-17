@@ -48,8 +48,8 @@ public class AdminMainView extends JFrame{
 		
 		
 
-	public static void main(String[] args) {
-		new AdminMainView();
-	}//main
+//	public static void main(String[] args) {
+//		new AdminMainView();
+//	}//main
 
 }//class
